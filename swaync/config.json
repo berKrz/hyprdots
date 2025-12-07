@@ -42,6 +42,10 @@
       "max-lines": 5,
       "text": "Label Text"
     },
+    "mpris": {
+    },
+    "notifications": {
+    },
     "volume": {
       "label": " "
     },

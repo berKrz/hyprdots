@@ -1,0 +1,11 @@
+# ~/.config/wofi/config
+mode=drun
+monitor=0
+width=600
+height=400
+location=center
+show=drun
+prompt=Search...
+filter_rate=100
+allow_images=true
+image_size=24

@@ -1,0 +1,110 @@
+* {
+  font-family: "JetBrains Mono ExtraBold", "JetBrains Mono";
+  font-weight: bold;
+  font-size: 16px;
+}
+
+window {
+  background-image: linear-gradient(180deg, rgba(45, 27, 78, 0.95) 0%, rgba(30, 30, 46, 0.98) 100%);
+  border: 2px solid #bd00ff;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(189, 0, 255, 0.4);
+  color: #00feff;
+}
+
+#input {
+  margin: 15px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: rgba(45, 27, 78, 0.5);
+  border: 2px solid #bd00ff;
+  color: #00feff;
+  text-shadow: 0 0 3px rgba(0, 254, 255, 0.5);
+  box-shadow: 0 0 4px rgba(0, 254, 255, 0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#input:hover {
+  border-color: #e056fd;
+  box-shadow: 0 0 8px rgba(224, 86, 253, 0.4);
+}
+
+#input:focus {
+  border-color: #e056fd;
+  box-shadow: 0 0 10px rgba(224, 86, 253, 0.6);
+}
+
+#inner-box {
+  margin: 5px;
+  background-color: transparent;
+}
+
+#outer-box {
+  margin: 5px;
+  background-color: transparent;
+}
+
+#scroll {
+  margin: 0px;
+  border: none;
+}
+
+#entry {
+  margin: 5px 15px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: transparent;
+  color: #00feff;
+  border: 2px solid transparent;
+  transition: none;
+}
+
+#entry:selected {
+  background-color: rgba(189, 0, 255, 0.2);
+  border: 2px solid #e056fd;
+  box-shadow: 0 0 10px rgba(224, 86, 253, 0.6);
+}
+
+#entry:hover {
+  background-color: rgba(189, 0, 255, 0.2);
+  border: 2px solid #e056fd;
+  box-shadow: 0 0 10px rgba(224, 86, 253, 0.6);
+}
+
+#entry:selected #text,
+#entry:hover #text {
+  color: #e056fd;
+  text-shadow: 0 0 5px rgba(224, 86, 253, 0.9);
+}
+
+#expander-box {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+#expander-arrow {
+  margin-left: 10px;
+  color: #bd00ff;
+  transition: all 0.3s;
+}
+
+#entry:selected #expander-arrow,
+#entry:hover #expander-arrow {
+  color: #e056fd;
+  text-shadow: 0 0 5px rgba(224, 86, 253, 0.6);
+}
+
+#entry:selected #expander-box,
+#entry:hover #expander-box {
+  background-color: transparent;
+}
+
+#text {
+  margin-left: 10px;
+}
+
+#img {
+  margin-right: 10px;
+  background-color: transparent;
+}

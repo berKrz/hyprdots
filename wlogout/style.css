@@ -1,0 +1,89 @@
+* {
+    background-image: none;
+    font-family: "JetBrains Mono ExtraBold", "JetBrains Mono";
+    font-weight: 800;
+    font-size: 14px;
+}
+
+window {
+    background-color: rgba(30, 30, 46, 0.85);
+}
+
+button {
+    color: #e056fd; 
+    border: 2px solid #bd00ff; 
+    border-radius: 20px;
+    margin: 10px;
+    
+    background-repeat: no-repeat, no-repeat;
+    background-position: center, center;
+    background-size: 25%, cover;
+    
+    animation-name: neon-breath;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    
+    box-shadow: 0 0 10px rgba(189, 0, 255, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    text-shadow: 0 0 2px rgba(189, 0, 255, 0.6);
+}
+
+button:hover {
+    background-size: 25%, cover;
+    
+    border-color: #e056fd;
+    color: #00feff;
+    
+    margin-top: 0px;
+    margin-bottom: 20px;
+    
+    box-shadow: 0 0 40px rgba(224, 86, 253, 0.6), 0 0 10px rgba(224, 86, 253, 0.4);
+}
+
+button:focus {
+    color: #e056fd;
+    text-shadow: 0 0 2px rgba(0, 254, 255, 0.6);
+}
+
+#lock { background-image: image(url("/usr/share/wlogout/icons/lock.png")), linear-gradient(135deg, #2d1b4e, #1e1e2e); }
+#lock:hover { background-image: image(url("/usr/share/wlogout/icons/lock.png")), linear-gradient(135deg, #a300a3, #e056fd); }
+
+#logout { background-image: image(url("/usr/share/wlogout/icons/logout.png")), linear-gradient(135deg, #2d1b4e, #1e1e2e); }
+#logout:hover { background-image: image(url("/usr/share/wlogout/icons/logout.png")), linear-gradient(135deg, #a300a3, #e056fd); }
+
+#suspend { background-image: image(url("/usr/share/wlogout/icons/suspend.png")), linear-gradient(135deg, #2d1b4e, #1e1e2e); }
+#suspend:hover { background-image: image(url("/usr/share/wlogout/icons/suspend.png")), linear-gradient(135deg, #a300a3, #e056fd); }
+
+#hibernate { background-image: image(url("/usr/share/wlogout/icons/hibernate.png")), linear-gradient(135deg, #2d1b4e, #1e1e2e); }
+#hibernate:hover { background-image: image(url("/usr/share/wlogout/icons/hibernate.png")), linear-gradient(135deg, #a300a3, #e056fd); }
+
+#shutdown { background-image: image(url("/usr/share/wlogout/icons/shutdown.png")), linear-gradient(135deg, #2d1b4e, #1e1e2e); }
+#shutdown:hover { background-image: image(url("/usr/share/wlogout/icons/shutdown.png")), linear-gradient(135deg, #a300a3, #e056fd); }
+
+#reboot { background-image: image(url("/usr/share/wlogout/icons/reboot.png")), linear-gradient(135deg, #2d1b4e, #1e1e2e); }
+#reboot:hover { background-image: image(url("/usr/share/wlogout/icons/reboot.png")), linear-gradient(135deg, #a300a3, #e056fd); }
+
+@keyframes neon-breath {
+    0% {
+        box-shadow: 0 0 10px rgba(189, 0, 255, 0.1);
+        border-color: #e056fd;
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(189, 0, 255, 0.5);
+        border-color: #a300a3; 
+    }
+    100% {
+        box-shadow: 0 0 10px rgba(189, 0, 255, 0.1);
+        border-color: #e056fd;
+    }
+}
+
+button { animation-duration: 4s; }
+
+#lock { animation-delay: 0s; }
+#logout { animation-delay: 0.2s; }
+#suspend { animation-delay: 0.4s; }
+#hibernate { animation-delay: 0.6s; }
+#reboot { animation-delay: 0.8s; }
+#shutdown { animation-delay: 1s; }

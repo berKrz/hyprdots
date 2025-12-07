@@ -34,3 +34,6 @@ user-dirs.dirs
 user-dirs.locale
 vlc/
 xsettingsd/
+Docker Desktop/
+composer/
+herd-lite/

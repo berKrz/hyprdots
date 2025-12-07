@@ -1,0 +1,146 @@
+{
+	"layer": "top",
+	"position": "top",
+	"mod": "dock",
+	"exclusive": true,
+	"passthrough": false,
+	"gtk-layer-shell": true,
+	"height": 50,
+	"modules-left": [
+		"clock",
+		"clock#date",
+		"custom/updates"
+	],
+	"modules-center": ["hyprland/workspaces"],
+	"modules-right": [
+		"custom/network",
+		"bluetooth",
+		"battery",
+		"custom/keyboard",
+		"pulseaudio",
+		"pulseaudio#microphone",
+		"custom/power"
+	],
+	"clock": {
+		"format": "{:%H:%M}",
+		"interval": 1,
+		"tooltip-format": "{:%H:%M:%S}",
+		"tooltip": true
+	},
+	"clock#date": {
+		"format": "{:%d / %b / %Y - %a}",
+		"on-click-middle": "gnome-calendar",
+		"tooltip-format": "<tt><small>{calendar}</small></tt>",
+		"calendar": {
+			"mode"          : "month",
+			"on-scroll"     : 1,
+			"format": {
+				"months":     "<span color='#ffff'><b>{}</b></span>",
+				"days":       "<span color='#ffff'><b>{}</b></span>",
+				"weeks":      "<span color='#ffff'><b>W{}</b></span>",
+				"today":      "<span color='#f200ff'><b>{}</b></span>"
+			}
+		},
+		"actions":  {
+			"on-click-right": "mode",
+			"on-click-forward": "tz_up",
+			"on-click-backward": "tz_down",
+			"on-scroll-down": "shift_up",
+			"on-scroll-up": "shift_down"
+		}
+	},
+	"custom/updates": {
+		"format": "{}",
+		"exec": "~/.config/waybar/scripts/updates.sh",
+		"interval": 3600,
+		"return-type": "json",
+		"on-click": "kitty --title 'System Update' sh -c 'sudo pacman -Syu; sleep 10; kitty @ close-window'"
+	},
+	"hyprland/workspaces": {
+		"format": "[{name}]",
+		"on-scroll-up": "hyprctl dispatch workspace e+1",
+		"on-scroll-down": "hyprctl dispatch workspace e-1",
+		"persistent_workspaces": {
+			"*": 5
+		}
+	},
+	"custom/network": {
+		"format": "{}",
+		"exec": "~/.config/waybar/scripts/network-status.sh",
+		"interval": 5,
+		"return-type": "json",
+		"on-click": "~/.config/waybar/scripts/wifi-menu.sh",
+		"on-click-right": "nm-connection-editor",
+		"tooltip": true
+	},
+	"bluetooth": {
+		"format": "",
+		"format-connected": "󰂱 {num_connections}",
+		"format-off": "󰂲",
+		"exec": "~/.config/waybar/scripts/bluetooth-status.sh",
+		"interval": 1,
+		"return-type": "json",
+		"on-click": "~/.config/waybar/scripts/bluetooth-menu.sh",
+		"on-click-right": "sh -c 'bluetoothctl show | grep -q \"Powered: yes\" && bluetoothctl power off || bluetoothctl power on'",
+		"on-click-middle": "blueman-manager",
+		"tooltip": true
+	},
+	"battery": {
+		"bat": "BAT1",
+		"interval": 60,
+		"on-click-right": "~/.config/waybar/scripts/power-profile-menu.sh",
+		"states": {
+			"warning": 30,
+			"critical": 15
+		},
+		"events": {
+			"on-discharging-warning": "notify-send -u normal 'Low Battery'",
+			"on-discharging-critical": "notify-send -u critical 'Very Low Battery'"
+		},
+		"format": "{icon} {capacity}%",
+		"format-alt": "{icon}",
+		"format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+		"format-charging": "󰂅 {capacity}%",
+		"max-length": 25
+	},
+	"custom/keyboard": {
+		"format": "{}",
+		"exec": "~/.config/waybar/scripts/keyboard-layout.sh",
+		"interval": 1,
+		"return-type": "json",
+		"on-click": "~/.config/waybar/scripts/keyboard-switch.sh",
+		"signal": 9,
+		"tooltip": true
+	},
+	"pulseaudio": {
+		"format": "{icon} {volume}%",
+		"tooltip": true,
+		"tooltip_format": "{name}",
+		"format-muted": "󰝟",
+		"on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+		"on-click-right": "pavucontrol",
+		"on-scroll-up": "pamixer -i 5 && pkill -RTMIN+10 waybar",
+		"on-scroll-down": "pamixer -d 5 && pkill -RTMIN+10 waybar",
+		"signal": 10,
+		"format-icons": {
+			"default": ["", "", ""]
+		}
+	},
+	"pulseaudio#microphone": {
+		"format": "{format_source}",
+		"format-source": " {volume}%",
+		"format-source-muted": " ",
+		"on-click": "pamixer --default-source -t",
+		"on-click-right": "pavucontrol --tab=4",
+		"on-scroll-up": "pamixer --default-source -i 5",
+		"on-scroll-down": "pamixer --default-source -d 5",
+		"scroll-step": 5,
+		"tooltip": false
+	},
+	"custom/power": {
+		"format": "⏻",
+		"tooltip": true,
+		"tooltip-format": "Power",
+		"on-click": "wlogout -b 6"
+	}
+}

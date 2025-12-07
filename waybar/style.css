@@ -29,7 +29,7 @@ tooltip label {
 #custom-date,
 #custom-updates,
 #custom-network,
-#bluetooth,
+#custom-bluetooth,
 #battery,
 #custom-keyboard,
 #pulseaudio,
@@ -141,7 +141,7 @@ tooltip label {
 }
 
 #custom-network:hover,
-#bluetooth:hover {
+#custom-bluetooth:hover {
     background-color: rgba(1, 116, 216, 0.2);
     color: #00feff;
     border-color: #0174d8;

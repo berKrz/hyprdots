@@ -14,7 +14,7 @@
 	"modules-center": ["hyprland/workspaces"],
 	"modules-right": [
 		"custom/network",
-		"bluetooth",
+		"custom/bluetooth",
 		"battery",
 		"custom/keyboard",
 		"pulseaudio",
@@ -73,10 +73,9 @@
 		"on-click-right": "nm-connection-editor",
 		"tooltip": true
 	},
-	"bluetooth": {
-		"format": "",
+	"custom/bluetooth": {
+		"format": "{text}",
 		"format-connected": "󰂱 {num_connections}",
-		"format-off": "󰂲",
 		"exec": "~/.config/waybar/scripts/bluetooth-status.sh",
 		"interval": 1,
 		"return-type": "json",

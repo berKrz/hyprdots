@@ -2,7 +2,6 @@
 
 # 1. Check if Bluetooth is powered on
 if ! bluetoothctl show | grep -q "Powered: yes"; then
-    # If off, offer to turn it on
     if echo "  Enable Bluetooth" | wofi --dmenu --prompt "Bluetooth" | grep -q "Enable"; then
         bluetoothctl power on
     fi
@@ -10,31 +9,23 @@ if ! bluetoothctl show | grep -q "Powered: yes"; then
 fi
 
 # 2. Get list of paired devices
-# Raw format: Device MAC_ADDRESS Name
-# We loop through them to check connection status
 menu_options=""
 while read -r line; do
-    # Extract MAC and Name
     mac=$(echo "$line" | cut -d ' ' -f 2)
     name=$(echo "$line" | cut -d ' ' -f 3-)
     
-    # Check if connected
     if bluetoothctl info "$mac" | grep -q "Connected: yes"; then
-        icon="" # Connected
+        icon=""
     else
-        icon="" # Disconnected
+        icon=""
     fi
     
-    # Append to list
     menu_options+="$icon   $name ($mac)\n"
 done < <(bluetoothctl devices Paired)
 
-# Add management options at the top
 final_menu="󰂭   Disable Bluetooth\n󰂱   Open Blueman\n$menu_options"
 
 # 3. Show Wofi Menu
-# Removed --prompt to reduce clutter
-# Note: To hide the input box completely, you need to add "#input { display: none; }" to your wofi style.css
 selected=$(echo -e "$final_menu" | wofi --dmenu --insensitive --lines 10)
 
 # 4. Handle Selection
@@ -51,37 +42,26 @@ case "$selected" in
         exit
         ;;
     *)
-        # Extract MAC address
         mac=$(echo "$selected" | sed 's/.*(\(.*\))/\1/')
         
-        # Extract Clean Device Name (Removes the icon at start and MAC at end)
-        # This makes the notification look much cleaner
         dev_name=$(echo "$selected" | sed 's/^[][[:space:]]*//;s/ ([^)]*)$//')
         
-        # Define a static Notification ID (arbitrary number)
-        # This allows us to UPDATE the existing notification instead of creating a new one
         NOTIF_ID=2593
         
         if bluetoothctl info "$mac" | grep -q "Connected: yes"; then
-            # --- DISCONNECTING ---
             notify-send -r $NOTIF_ID -i network-bluetooth "Bluetooth" "Disconnecting from <b>$dev_name</b>..."
             
             if bluetoothctl disconnect "$mac"; then
-                # Success: Update the previous notification
                 notify-send -r $NOTIF_ID -i network-bluetooth "Bluetooth" "Disconnected from <b>$dev_name</b>"
             else
-                # Failure: Update with Critical urgency (swaync shows this with red border)
                 notify-send -r $NOTIF_ID -u critical -i dialog-error "Bluetooth" "Failed to disconnect <b>$dev_name</b>"
             fi
         else
-            # --- CONNECTING ---
             notify-send -r $NOTIF_ID -i network-bluetooth "Bluetooth" "Connecting to <b>$dev_name</b>..."
             
             if bluetoothctl connect "$mac"; then
-                # Success: Update the previous notification
                 notify-send -r $NOTIF_ID -i network-bluetooth "Bluetooth" "Connected to <b>$dev_name</b>"
             else
-                # Failure: Update with Critical urgency
                 notify-send -r $NOTIF_ID -u critical -i dialog-error "Bluetooth" "Failed to connect to <b>$dev_name</b>"
             fi
         fi

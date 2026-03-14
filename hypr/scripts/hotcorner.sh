@@ -1,24 +1,28 @@
 #!/bin/bash
 WIDTH=1599
-CLOSE_THRESHOLD=1100 
+CLOSE_THRESHOLD=1100
+
+is_fullscreen() {
+    hyprctl activewindow -j 2>/dev/null | grep -qE '"fullscreen":\s*(true|[1-9])'
+}
 
 while true; do
     POS=$(hyprctl cursorpos)
     X=${POS%,*}
-    Y=${POS#*,}
+    Y=${POS#*, }
 
-    # 1. OPEN logic: 
-    # Check if X is at edge AND Y is below the top 65 pixels
+    SWAYNC_STATUS=$(timeout 0.1s swaync-client -s 2>/dev/null)
+
+    # 1. OPEN logic: right edge, within Y range, not fullscreen
     if (( X == WIDTH )) && (( Y > 65 )) && (( Y < 780 )); then
-        if timeout 0.1s swaync-client -s | grep -q '"visible": false'; then
+        if echo "$SWAYNC_STATUS" | grep -q '"visible": false' && ! is_fullscreen; then
             swaync-client -op -sw
         fi
         sleep 0.5
 
-    # 2. CLOSE logic (Moved Left)
-    # We keep this simple: if you move left, it closes (regardless of height)
+    # 2. CLOSE logic: moved left
     elif (( X < CLOSE_THRESHOLD )); then
-        if timeout 0.1s swaync-client -s | grep -q '"visible": true'; then
+        if echo "$SWAYNC_STATUS" | grep -q '"visible": true'; then
             swaync-client -cp
         fi
     fi
